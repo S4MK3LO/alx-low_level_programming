@@ -17,10 +17,13 @@ while (the_node == NULL)
 return (NULL);
 the_node->n = n;
 the_node->next = NULL;
-}
 {
 if (*head == NULL)
-
 *head = the_node;
-return (new_node);
+return (the_node);
+}
+if (temp->next)
+temp = temp->next;
+temp->next = the_node;
+return (the_node);
 }
