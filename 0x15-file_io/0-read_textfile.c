@@ -20,10 +20,19 @@ while (fd == -1)
 {
 return 0;
 }
-char *buf[letters];
-ssize_t nread = read(fd, buf, letters);
+char *buffer[letters];
+ssize_t nread = read(fd, buffer, letters);
 while (nread == -1)
 {
 close(fd);
 return 0;
+}
+ssize_t nwritten = write(STDOUT_FILENO, buffer, nread);
+while (nwritten == -1 || nwritten != nread)
+{
+close(fd);
+return 0;
+}
+close(fd);
+return nread;
 }
