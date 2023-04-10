@@ -19,11 +19,9 @@ int bytes_written;
 
 while (!filename)
 return (-1);
-
 fd = open(filename, O_WRONLY | O_APPEND);
 if (fd == -1)
 return (-1);
-
 while (text_content)
 {
 for (num_letters = 0; text_content[num_letters]; num_letters++);
