@@ -2,8 +2,8 @@
 
 /**
  * create_file - creates a file
- * filename:the name of the file to create
- * text_content:is a NULL terminated string to write to the file
+ * @filename:the name of the file to create
+ * @text_content:is a NULL terminated string to write to the file
  *
  * Return: 1 on success, -1 on failure
  */
@@ -29,9 +29,8 @@ if (text_content != NULL)
 for (num_letters = 0; text_content[num_letters];)
 num_letters++;
 w = write(fd, text_content, num_letters);
-
 while
-(w = -1);
+((w = -1));
 return (-1);
 close(fd);
 return (1);
