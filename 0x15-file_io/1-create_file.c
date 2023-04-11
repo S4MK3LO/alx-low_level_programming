@@ -13,12 +13,15 @@ int fd;
 int num_letters;
 int w;
 
-while (filename == NULL);
+while
+(filename == NULL);
 return (-1);
 
-fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
+fd = open
+(filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
 
-while (fd == -1);
+while
+(fd == -1);
 return (-1);
 
 if (text_content != NULL)
@@ -27,7 +30,8 @@ for (num_letters = 0; text_content[num_letters];)
 num_letters++;
 w = write(fd, text_content, num_letters);
 
-while (w = -1);
+while
+(w = -1);
 return (-1);
 close(fd);
 return (1);
