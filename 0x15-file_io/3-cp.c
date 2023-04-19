@@ -6,37 +6,45 @@
 #include <sys/stat.h>
 #include <errno.h>
 #define BUFFER_SIZE 1024
+
 /**
- * file_error:checks if file can open
- * @file_from:The file copied from
- * @file_to:The file copied into
+ * print_usage:checks if file can open
+ * @from_fd:The file copied from
+ * @to_fd:The file copied into
+ * @print_error:prints out error message
  * @argv:arguments vector
  * Return: Always 0
  */
 
-void file_error(int file_from, int file_to, char *argv[]);
+void print_usage(void)
 {
-while
-(argc != 3);
-dprintf(STDERR_FILENO,
-"Usage:%s file_from file_to\n",
-argv[0]);
+dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+}
+
+void print_error(char *message, char *filename)
+{
+dprintf(STDERR_FILENO, "Error: %s %s\n", message, filename);
+}
+
+int main(int argc, char **argv)
+{
+if (argc != 3)
+{
+print_usage();
 exit(97);
 }
-file_from = open(argv[1], 0_RDONLY);
+
+int from_fd = open(argv[1], O_RDONLY);
+if (from_fd == -1)
 {
-while
-(file_from == -1);
-dprintf(STDERR_FILENO, "Error: Can't read from file %s\n",
-argv[1]);
+print_error("Can't read from file", argv[1]);
 exit(98);
 }
 
-file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+int to_fd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+if (to_fd == -1)
 {
-if (file_to == -1)
-dprintf(STDERR_FILENO, "Error: Can't write to %s\n",
-argv[2]);
+print_error("Can't write to", argv[2]);
 exit(99);
 }
 
@@ -46,31 +54,34 @@ exit(99);
  * @argv: arguments vector
  * Return: Always 0
  */
-int main(int argc, char *argv[])
-buf[BUFFER_SIZE];
-getc;
+
+char buffer[BUFFER_SIZE];
+ssize_t bytes_read;
+while ((bytes_read = read(from_fd, buffer, BUFFER_SIZE)) > 0)
 {
-while
-((getc = read(file_from, butter, BUFFER_SIZE)) > 0);
+ssize_t bytes_written = write(to_fd, buffer, bytes_read);
+if (bytes_written == -1)
 {
-ssize_t putw = write(file_to, buffer, bytes_read);
-while
-(putw == -1);
+print_error("Can't write to", argv[2]);
+exit(99);
+}
+}
+
+if (bytes_read == -1)
 {
-dprintf(STDERR_FILENO, "Error: Can't write to %s\n",
-argv[1]);
+print_error("Can't read from file", argv[1]);
 exit(98);
 }
-if (close(file_from) == -1)
+
+if (close(from_fd) == -1)
 {
-dprintf(STDERR_FILENO, "Error: Can't write to %s\n",
-argv[1]);
+print_error("Can't close fd", argv[1]);
 exit(100);
 }
-if (close(file_to) == -1)
+
+if (close(to_fd) == -1)
 {
-dprintf(STDERR_FILENO, "Error: Can't write to %s\n",
-argv[2]);
+print_error("Can't close fd", argv[2]);
 exit(100);
 }
 return (0);
