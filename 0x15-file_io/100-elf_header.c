@@ -205,7 +205,7 @@ return (0);
  */
 int main(int ac, char *av[])
 {
-int fd, ret_read;
+int fopen, getc;
 char ptr[27];
 
 if (ac != 2)
@@ -214,17 +214,17 @@ dprintf(STDERR_FILENO, "Usage: elf_header elf_filename\n");
 exit(98);
 }
 
-fd = open(av[1], O_RDONLY);
-if (fd < 0)
+fopen = open(av[1], O_RDONLY);
+if (fopen < 0)
 {
 dprintf(STDERR_FILENO, "Err: file can not be open\n");
 exit(98);
 }
 
-lseek(fd, 0, SEEK_SET);
-ret_read = read(fd, ptr, 27);
+lseek(fopen, 0, SEEK_SET);
+getc = read(fopen, ptr, 27);
 
-if (ret_read == -1)
+if (getc == -1)
 {
 dprintf(STDERR_FILENO, "Err: The file can not be read\n");
 exit(98);
@@ -236,6 +236,6 @@ dprintf(STDERR_FILENO, "Err: It is not an ELF\n");
 exit(98);
 }
 _systeminfo(ptr);
-close(fd);
+close(fopen);
 return (0);
 }
