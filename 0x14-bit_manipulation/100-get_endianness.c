@@ -12,7 +12,7 @@ unsigned int n = 1;
 
 char *c = (char *)&n;
 
-if (*e != 1)
+if (*c != 1)
 
 return (0);
 
