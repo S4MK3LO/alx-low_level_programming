@@ -15,7 +15,7 @@ int catalyst;
 if (b == NULL)
 return (0);
 
-for (i = 0; b[i]; i++)
+for (catalyst = 0; b[catalyst]; catalyst++)
 {
 if (*b != '0' && *b != '1')
 return (0);
